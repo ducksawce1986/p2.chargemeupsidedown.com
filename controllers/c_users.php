@@ -1,13 +1,19 @@
 <?php
 class users_controller extends base_controller {
 
+/*----------------------------------------------
+----------------------------------------------*/
+
     public function __construct() {
+
+        # Base controller construct called
         parent::__construct();
     } 
 
-    public function index() {
-        echo "This is the index page";
-    }
+    /*-----------------------------
+    Form display for user sign up
+    -----------------------------*/
+
 
     public function signup() {
 
