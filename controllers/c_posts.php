@@ -2,8 +2,8 @@
 
 class posts_controller extends base_controller {
 
-	/*-----------------------------------------------------
-	-----------------------------------------------------*/
+	/*------------------------------------------------------------------
+	------------------------------------------------------------------*/
 
 	public function __construct() {
 
@@ -13,8 +13,13 @@ class posts_controller extends base_controller {
 		# Letting only logged in users access methods in this controller
 		if(!$this->user) {
 			die("Members only");
+		
 		}
 	}
+
+	/*---------------------
+	Display a new post form
+	---------------------*/
 
 	public function add() {
 
@@ -23,6 +28,10 @@ class posts_controller extends base_controller {
 			echo $this->template;
 
 	}
+
+	/*-----------------------
+	Process new posts
+	-----------------------*/
 
 	public function p_add() {
 
@@ -36,6 +45,9 @@ class posts_controller extends base_controller {
 
 	}
 
+	/*-----------------------
+	View all posts
+	-----------------------*/
 
 	public function index() {
 
@@ -63,6 +75,9 @@ class posts_controller extends base_controller {
 
 	}
 
+	/*-----------------------
+	-----------------------*/
+
 	public function users() {
 
 		$this->template->content = View::instance("v_posts_users");
@@ -85,6 +100,10 @@ class posts_controller extends base_controller {
 
 	}
 
+	/*--------------------------------------------------
+	Creates row in users_users table showing 'following'
+	--------------------------------------------------*/
+
 	public function follow($user_id_followed) {
         
             # Prepare the data array to be inserted
@@ -102,7 +121,11 @@ class posts_controller extends base_controller {
         
         }
 
-     public function unfollow($user_id_followed) {
+    /*-------------------------------------------------------
+    Removes row from users_users table, triggering 'unfollow'
+    -------------------------------------------------------*/
+    
+    public function unfollow($user_id_followed) {
         
             # Set up the where condition
             $where_condition = 'WHERE user_id = '.$this->user->user_id.' AND user_id_followed = '.$user_id_followed;
