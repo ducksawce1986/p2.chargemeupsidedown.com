@@ -2,109 +2,109 @@
 
 class posts_controller extends base_controller {
 
-	/*------------------------------------------------------------------
-	------------------------------------------------------------------*/
+        /*------------------------------------------------------------------
+        ------------------------------------------------------------------*/
 
-	public function __construct() {
+        public function __construct() {
 
-		# Making sure the base controller construct gets called
-		parent::__construct();
+                # Making sure the base controller construct gets called
+                parent::__construct();
 
-		# Letting only logged in users access methods in this controller
-		if(!$this->user) {
-			die("Members only");
-		
-		}
-	}
+                # Letting only logged in users access methods in this controller
+                if(!$this->user) {
+                        die("Members only");
+                
+                }
+        }
 
-	/*---------------------
-	Display a new post form
-	---------------------*/
+        /*---------------------
+        Display a new post form
+        ---------------------*/
 
-	public function add() {
+        public function add() {
 
-			$this->template->content = View::instance("v_posts_add");
+                        $this->template->content = View::instance("v_posts_add");
 
-			echo $this->template;
+                        echo $this->template;
 
-	}
+        }
 
-	/*-----------------------
-	Process new posts
-	-----------------------*/
+        /*-----------------------
+        Process new posts
+        -----------------------*/
 
-	public function p_add() {
+        public function p_add() {
 
-		$_POST['user_id'] = $this->user->user_id;
-		$_POST['created'] = Time::now();
-		$_POST['modified'] = Time::now();
+                $_POST['user_id'] = $this->user->user_id;
+                $_POST['created'] = Time::now();
+                $_POST['modified'] = Time::now();
 
-		DB::instance(DB_NAME)->insert('posts', $_POST);
+                DB::instance(DB_NAME)->insert('posts', $_POST);
 
-		Router::redirect('/posts/');
+                Router::redirect('/posts/');
 
-	}
+        }
 
-	/*-----------------------
-	View all posts
-	-----------------------*/
+        /*-----------------------
+        View all posts
+        -----------------------*/
 
-	public function index() {
+        public function index() {
 
-		$this->template->content = View::instance('v_posts_index');
+                $this->template->content = View::instance('v_posts_index');
 
-		$q = 'SELECT 
-            	posts.content,
-            	posts.created,
-            	posts.user_id AS post_user_id,
-            	users_users.user_id AS follower_id,
-            	users.first_name,
-            	users.last_name
-        	FROM posts
-        	INNER JOIN users_users 
-            	ON posts.user_id = users_users.user_id_followed
-        	INNER JOIN users 
-            	ON posts.user_id = users.user_id
-        	WHERE users_users.user_id = '.$this->user->user_id;
+                $q = 'SELECT 
+                    posts.content,
+                    posts.created,
+                    posts.user_id AS post_user_id,
+                    users_users.user_id AS follower_id,
+                    users.first_name,
+                    users.last_name
+                FROM posts
+                INNER JOIN users_users 
+                    ON posts.user_id = users_users.user_id_followed
+                INNER JOIN users 
+                    ON posts.user_id = users.user_id
+                WHERE users_users.user_id = '.$this->user->user_id;
 
-		$posts = DB::instance(DB_NAME)->select_rows($q);
+                $posts = DB::instance(DB_NAME)->select_rows($q);
 
-		$this->template->content->posts = $posts;
+                $this->template->content->posts = $posts;
 
-		echo $this->template;
+                echo $this->template;
 
-	}
+        }
 
-	/*-----------------------
-	-----------------------*/
+        /*-----------------------
+        -----------------------*/
 
-	public function users() {
+        public function users() {
 
-		$this->template->content = View::instance("v_posts_users");
+                $this->template->content = View::instance("v_posts_users");
 
-		$q = 'SELECT *
-			FROM users';
+                $q = 'SELECT *
+                        FROM users';
 
-		$users = DB::instance(DB_NAME)->select_rows($q);
+                $users = DB::instance(DB_NAME)->select_rows($q);
 
-		$q = 'SELECT *
-			FROM users_users
-			WHERE user_id = '.$this->user->user_id; 
+                $q = 'SELECT *
+                        FROM users_users
+                        WHERE user_id = '.$this->user->user_id; 
 
-		$connections = DB::instance(DB_NAME)->select_array($q, 'user_id_followed');
+                $connections = DB::instance(DB_NAME)->select_array($q, 'user_id_followed');
 
-		$this->template->content->users = $users;
-		$this->template->content->connections = $connections;
+                $this->template->content->users = $users;
+                $this->template->content->connections = $connections;
 
-		echo $this->template;
+                echo $this->template;
 
-	}
+        }
 
-	/*--------------------------------------------------
-	Creates row in users_users table showing 'following'
-	--------------------------------------------------*/
+        /*--------------------------------------------------
+        Creates row in users_users table showing 'following'
+        --------------------------------------------------*/
 
-	public function follow($user_id_followed) {
+        public function follow($user_id_followed) {
         
             # Prepare the data array to be inserted
             $data = Array(
