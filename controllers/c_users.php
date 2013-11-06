@@ -71,7 +71,7 @@ class users_controller extends base_controller {
             WHERE email = "'.$_POST['email'].'"
             AND password = "'.$_POST['password'].'"';
 
-            echo $q;
+        echo $q;
 
         # If there is match, return a token
         $token = DB::instance(DB_NAME)->select_field($q);
@@ -83,7 +83,7 @@ class users_controller extends base_controller {
             setcookie('token', $token, strtotime('+1 year'), '/');
 
             # Send them to homepage
-            echo "You are logged in!";
+            Router::redirect('/');
         }
         
         # Fail
