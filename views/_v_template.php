@@ -30,10 +30,10 @@
 		</nav>
 
 		<?php if($user): ?>
-			You are logged in as <?=$user->first_name?> <?=$user->last_name?><br>
+			You're logged in as <?=$user->first_name?> <?=$user->last_name?>.<br>
 		<?php endif; ?>
 
-		<br><br>
+		<br>
 
 		<?php if(isset($content)) echo $content; ?>
 
