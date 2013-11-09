@@ -1,163 +1,296 @@
 <?php
+
 class users_controller extends base_controller {
 
-/*---------------------------------------------------------------------------
----------------------------------------------------------------------------*/
-
     public function __construct() {
-
-        # Base controller construct called
         parent::__construct();
     } 
 
-    /*-----------------------------
-    Form display for user sign up
-    -----------------------------*/
+    public function index() {
+        echo "This is the index page";
+    }
+
+
+
+/*-----------------------------
+    Signup
+-----------------------------*/
 
     public function signup() {
-
-        # Set up the view
+        
+    # Setup View
         $this->template->content = View::instance('v_users_signup');
-
-        # Render the view
+        $this->template->title   = "Sign Up Landing";
+        
+    # Render View
         echo $this->template;
     }
 
-    /*--------------------------
-    Processing sign up form
-    --------------------------*/
+
+
+/*------------------------------
+    Signup Processing
+------------------------------*/
 
     public function p_signup() {
+        
+    # Sanitize Data Against SQL Injection Attacks
+        $_POST = DB::instance(DB_NAME)->sanitize($_POST);
 
-        # Mark the time
-        $_POST['created'] = Time::now();
+    # Insert Time Stamp For Creation / Modification Of User Posts
+        $_POST['created']  = Time::now();
+        $_POST['modified'] = Time::now();
+        
+    # Password Encryption
+        $_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);    
 
-        #Hash the password
-        $_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
+    # Create Token From Email And Random String
 
-        # Create a hashed token
-        $_POST['token'] = sha1(TOKEN_SALT.$_POST['email'].Utils::generate_random_string());
+        $_POST['token'] = sha1(TOKEN_SALT.$_POST['email'].Utils::generate_random_string()); 
 
-        #Insert the new user
-        DB::instance(DB_NAME)->insert_row('users', $_POST);
+    # Insert User Into Database
+        $user_id = DB::instance(DB_NAME)->insert('users', $_POST);
+        
+        $to[] = Array("name" => $_POST['first_name'], "email" => $_POST['email']);
+                                
+            # Build Array Of Email Submissions On Site
+                $from = Array("name" => APP_NAME, "email" => APP_EMAIL);
 
-        # Send them to the login page
-        Router::redirect('/users/login');
-    }
+            # Subject Line
+                $subject = "Welcome to Charge Me UP!";
 
-    /*-------------------------
-    Display form for user login
-    -------------------------*/
+            # Body
+                $body = "Welcome to Charge Me UP! You have free reign to do what you want now!
+                ";
 
-    public function login() {
-        $this->template->content = View::instance('v_users_login');
+            # Build Pairs of Names / Emails For CC And BCC Purposes
+                $cc  = "";
+                $bcc = "";
+
+            # Send Email
+                $email = Email::send($to, $from, $subject, $body, true, $cc, $bcc);
+
+    # Send User To Special Signup Success Page
+        $this->template->content = View::instance('v_users_success');
+        $this->template->title   = "Hey Hey!!";
         echo $this->template;
     }
 
-    /*-------------------------
-    Process login form
-    -------------------------*/
+
+
+/*----------------------------------------
+    Logout
+----------------------------------------*/
+
+    public function login($error = NULL) {
+    # Setup View
+        $this->template->content = View::instance('v_users_login');
+        
+    # Pass data to the view
+        $this->template->content->error = $error;
+        $this->template->title   = "Login Page";
+
+    # Render template
+        echo $this->template;
+    }
+
+
+
+/*-----------------------------
+    Login Processing
+-----------------------------*/
 
     public function p_login() {
-
-        # Has password entered by user to compare to database
+    
+    # Sanitize User Data Against SQL Injection Attack
+        $_POST = DB::instance(DB_NAME)->sanitize($_POST);
+    
+    # Hash User Submitted Password Against That In Database
         $_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
+    
+    # Search Database For Email and Password / Create Token
+        $q = "SELECT token 
+                FROM users 
+                WHERE email = '".$_POST['email']."' 
+                AND password = '".$_POST['password']."'";
 
-        # Set up query to see if there's matching email/password in DB
-        $q =
-            'SELECT token
-            FROM users
-            WHERE email = "'.$_POST['email'].'"
-            AND password = "'.$_POST['password'].'"';
-
-        # If there is match, return token
         $token = DB::instance(DB_NAME)->select_field($q);
 
-        # Success
-        if($token) {
-            
-            # Don't echo anything to page before setting this cookie
-            setcookie('token', $token, strtotime('+1 year'), '/');
-            
-            # Send them to homepage
-            Router::redirect('/');
-        }
-        
-        # Fail
-        else {
+    # If No Match In Databse, Login
+        if(!$token) {
 
-            #Send them back to login page
-            echo "Login failed! <a href='/users/login'>Try again!?</a>";
-        }
+        # Route User Back To Login Page
+            Router::redirect("/users/login/error");
 
+    # If Login Succeeded
+        } else {
+
+        # New Cookie Made
+            setcookie("token", $token, strtotime('+1 year'), '/');
+
+        # Send User To Their Profile Page
+            Router::redirect("/users/profile");
+        }
     }
 
-    /*---------------------------------------
-    No view needed here. Logout automatically
-    takes user from users/logout to homepage
-    ---------------------------------------*/
+
+
+/*----------------------------
+    Logout
+----------------------------*/
+
 
     public function logout() {
-        
-        # Generate a new token they'll use next time they log in
+
+    # Generate Token For Next Login
         $new_token = sha1(TOKEN_SALT.$this->user->email.Utils::generate_random_string());
+        
+    # Create Array For New Token
+        $data = Array("token" => $new_token);
 
-        # Update their row in the DB with a new token
-        $data = Array('token' => $new_token);
+    # Update
+        DB::instance(DB_NAME)->update("users", $data, "WHERE token = '".$this->user->token."'");
 
-        DB::instance(DB_NAME)->update('users',$data, 'WHERE user_id ='. $this->user->user_id);
+    # Place Duration Limit Of Cookie Effectiveness
+        setcookie("token", "", strtotime('-1 year'), '/');
 
-        # Delete old token cookie by expiring it
-        setcookie('token', '', strtotime('-1 year'), '/');
-
-        # Send them back to the homepage
-        Router::redirect('/');
-
+    # Route User To Main Index
+        Router::redirect("/");
     }
 
 
-    /*------------------------------------------
-    ------------------------------------------*/
+
+/*----------------------------------------------
+    Profile Creation
+----------------------------------------------*/
 
     public function profile($user_name = NULL) {
 
-        # Only logged in users are allowed
         if(!$this->user) {
 
-            //Router::redirect('/');
-            die('Members only. <a href="/users/login">Login</a>');
+        # If Not User, Route Them To Login Page
+            Router::redirect('/users/login');
         }
-
-        # Set up the View
+    # Set Up View  
         $this->template->content = View::instance('v_users_profile');
-        
-        # Set page title
-        $this->template->title = "Profile";
+        $this->template->title   = $this->user->first_name." ".$this->user->last_name;
 
-        # Load client files
+    # Make Array Of Client Files To Place In Document Head
         $client_files_head = Array(
-            '/css/profile.css',
-            '/css/master.css'
+            '/css/widgets.css',
+            '/css/profile.css'
             );
 
-        $this->template->client_files_head = Utils::load_client_files($client_files_head);
+    # Generate Links From Array
+        $this->template->client_files_head = Utils::load_client_files($client_files_head); 
 
+    # Make Array of Client Files To Place In Document Body
         $client_files_body = Array(
-            '/js/profile.js'
+            '/js/widgets.min.js',
+            '/js/profile.min.js'
             );
 
-        $this->template->client_files_body = Utils::load_client_files($client_files_body);
+    # Generate Links From Array
+        $this->template->client_files_body = Utils::load_client_files($client_files_body); 
+        
+    # Buile Query To Insert Users' Posts On Their Profile Page
+        $q = 'SELECT 
+                posts.content, 
+                posts.created,
+                posts.user_id,  
+                posts.post_id
+            FROM posts
+            WHERE posts.user_id ='.$this->user->user_id . ' 
+            ORDER BY posts.created DESC' ;
 
-        # Pass the data to the View
+        $posts = DB::instance(DB_NAME)->select_rows($q);
+    # Pass Data To View
+        $this->template->content->posts = $posts;
+
+    # Pass Info To User Fragment
         $this->template->content->user_name = $user_name;
-
-        # Display the View
+        
+    # Render View
         echo $this->template;
-
-        //$view = View::instance('v_users_profile');
-        //$view->user_name = $user_name;
-        //echo $view;
-
     }
 
-} # end of the class
+
+
+/*------------------------------------
+    Add Profile Photo
+------------------------------------*/
+
+    public function profile_update() {
+        
+    # If User Has File To Upload
+        if ($_FILES['avatar']['error'] == 0) {
+        
+        # Upload Photo
+            $image = Upload::upload($_FILES, "/uploads/avatars/", array("JPG", "JPEG", "jpg", "jpeg", "gif", "GIF", "png", "PNG"), $this->user->user_id);
+
+            if($image == 'Invalid file type.') {
+            
+            # Error Return
+                Router::redirect("/users/profile/error"); 
+            }
+            else {
+            
+            # Upload Processing
+                $data = Array("image" => $image);
+                DB::instance(DB_NAME)->update("users", $data, "WHERE user_id = ".$this->user->user_id);
+
+            # Image Resizing
+                $imgObj = new Image($_SERVER["DOCUMENT_ROOT"] . '/uploads/avatars/' . $image);
+                $imgObj->resize(100,100, "crop");
+                $imgObj->save_image($_SERVER["DOCUMENT_ROOT"] . '/uploads/avatars/' . $image); 
+            }
+        }
+
+        else{
+        
+        # Error Return
+            Router::redirect("/users/profile/error");  
+        }
+
+    # Route To User's Profile Page
+        router::redirect('/users/profile'); 
+    }  
+
+
+
+    /*------------------------
+        Avatar Creation
+    ------------------------*/
+
+    public function upload() {
+
+    # Setup View
+        $this->template->content = View::instance('v_users_upload');
+        $this->template->title   = "Your Profile Page";
+
+    # Render Template
+        echo $this->template;
+   }
+
+
+
+   /*--------------------------
+        Avatar Processing
+   --------------------------*/
+
+   public function p_upload() {
+
+    # Save Image And Update Row In Database
+        $image = Upload::upload($_FILES, "/uploads/profile/", array("jpg", "JPG", "jpeg", "JPEG","gif", "GIF","png", "PNG"), $this->user->user_id);
+
+        $imageFileName = dirname(__FILE__).'/../uploads/profile/'.$image;
+
+        $data=array("image"=>$image);
+        $dbInstance = DB::instance(DB_NAME);
+        $rows = $dbInstance->update("users", $data, "WHERE user_id = ".$this->user->user_id);
+
+    # Send User To Their Profile Page
+        Router::redirect("/users/profile");
+    }
+
+} # eoc
