@@ -31,7 +31,7 @@ A email designated to receive messages from the server. Examples:
 	define('SYSTEM_EMAIL', 'zpostle@gmail.com'); 
 
 # Default DB name for this app
-	define('DB_NAME', 'p2_chargemeupsidedown_com'); 
+	define('DB_NAME', 'chargeme_p2_chargemeupsidedown_com'); 
 
 # Timezone
 	define('TIMEZONE', 'America/New_York');
