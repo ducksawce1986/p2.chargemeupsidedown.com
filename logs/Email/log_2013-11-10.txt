@@ -1,0 +1,36 @@
+2013-11-10 13:32:14 - INFO --> -------------------------- 
+2013-11-10 13:32:14 - INFO --> Controller/Method: users/p_signup 
+2013-11-10 13:32:14 - INFO --> From: Charge Me UP (zpostle@gmail.com) 
+2013-11-10 13:32:14 - INFO --> To: Rajon (rrondo@gmail.com),  
+2013-11-10 13:32:14 - INFO --> CC:  
+2013-11-10 13:32:14 - INFO --> BCC:  
+2013-11-10 13:32:14 - INFO --> Subject: Welcome to Charge Me UP! 
+2013-11-10 13:32:14 - INFO --> Body: Welcome to Charge Me UP! You have free reign to do what you want now!
+                 
+2013-11-10 13:34:29 - INFO --> -------------------------- 
+2013-11-10 13:34:29 - INFO --> Controller/Method: users/p_signup 
+2013-11-10 13:34:29 - INFO --> From: Charge Me UP (zpostle@gmail.com) 
+2013-11-10 13:34:29 - INFO --> To: Ray (rallen@gmail.com),  
+2013-11-10 13:34:29 - INFO --> CC:  
+2013-11-10 13:34:29 - INFO --> BCC:  
+2013-11-10 13:34:29 - INFO --> Subject: Welcome to Charge Me UP! 
+2013-11-10 13:34:29 - INFO --> Body: Welcome to Charge Me UP! You have free reign to do what you want now!
+                 
+2013-11-10 13:34:53 - INFO --> -------------------------- 
+2013-11-10 13:34:53 - INFO --> Controller/Method: users/p_signup 
+2013-11-10 13:34:53 - INFO --> From: Charge Me UP (zpostle@gmail.com) 
+2013-11-10 13:34:53 - INFO --> To: Paul  (ppierce@gmail.com),  
+2013-11-10 13:34:53 - INFO --> CC:  
+2013-11-10 13:34:53 - INFO --> BCC:  
+2013-11-10 13:34:53 - INFO --> Subject: Welcome to Charge Me UP! 
+2013-11-10 13:34:53 - INFO --> Body: Welcome to Charge Me UP! You have free reign to do what you want now!
+                 
+2013-11-10 13:35:15 - INFO --> -------------------------- 
+2013-11-10 13:35:15 - INFO --> Controller/Method: users/p_signup 
+2013-11-10 13:35:15 - INFO --> From: Charge Me UP (zpostle@gmail.com) 
+2013-11-10 13:35:15 - INFO --> To: Kevin (kgarnett@gmail.com),  
+2013-11-10 13:35:15 - INFO --> CC:  
+2013-11-10 13:35:15 - INFO --> BCC:  
+2013-11-10 13:35:15 - INFO --> Subject: Welcome to Charge Me UP! 
+2013-11-10 13:35:15 - INFO --> Body: Welcome to Charge Me UP! You have free reign to do what you want now!
+                 

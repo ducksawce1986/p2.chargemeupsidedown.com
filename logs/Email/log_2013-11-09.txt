@@ -1,0 +1,135 @@
+2013-11-09 0:29:54 - INFO --> -------------------------- 
+2013-11-09 0:29:54 - INFO --> Controller/Method: users/p_signup 
+2013-11-09 0:29:56 - INFO --> From: Charge Me UP (zpostle@gmail.com) 
+2013-11-09 0:29:56 - INFO --> To: Damon (zpostle@gmail.com),  
+2013-11-09 0:29:56 - INFO --> CC:  
+2013-11-09 0:29:56 - INFO --> BCC:  
+2013-11-09 0:29:56 - INFO --> Subject: Welcome to Flabber 
+2013-11-09 0:29:56 - INFO --> Body: Welcome to Flabber! We hope you find time to flabb each and every day. Be sure to visit Flabber often by visiting http://p2.iportal.pw
+                 
+2013-11-09 0:33:22 - INFO --> -------------------------- 
+2013-11-09 0:33:22 - INFO --> Controller/Method: users/p_signup 
+2013-11-09 0:33:22 - INFO --> From: Charge Me UP (zpostle@gmail.com) 
+2013-11-09 0:33:22 - INFO --> To: Budget (zpostle@gmail.com),  
+2013-11-09 0:33:22 - INFO --> CC:  
+2013-11-09 0:33:22 - INFO --> BCC:  
+2013-11-09 0:33:22 - INFO --> Subject: Welcome to Flabber 
+2013-11-09 0:33:22 - INFO --> Body: Welcome to Flabber! We hope you find time to flabb each and every day. Be sure to visit Flabber often by visiting http://p2.iportal.pw
+                 
+2013-11-09 3:26:31 - INFO --> -------------------------- 
+2013-11-09 3:26:32 - INFO --> Controller/Method: users/p_signup 
+2013-11-09 3:26:32 - INFO --> From: Charge Me UP (zpostle@gmail.com) 
+2013-11-09 3:26:32 - INFO --> To: Al (adimeola@gmail.com),  
+2013-11-09 3:26:32 - INFO --> CC:  
+2013-11-09 3:26:32 - INFO --> BCC:  
+2013-11-09 3:26:32 - INFO --> Subject: Welcome to Flabber 
+2013-11-09 3:26:32 - INFO --> Body: Welcome to Flabber! We hope you find time to flabb each and every day. Be sure to visit Flabber often by visiting http://p2.iportal.pw
+                 
+2013-11-09 10:15:11 - INFO --> -------------------------- 
+2013-11-09 10:15:11 - INFO --> Controller/Method: users/p_signup 
+2013-11-09 10:15:11 - INFO --> From: Charge Me UP (zpostle@gmail.com) 
+2013-11-09 10:15:11 - INFO --> To: Ryutaro (rkawabata@gmail.com),  
+2013-11-09 10:15:11 - INFO --> CC:  
+2013-11-09 10:15:11 - INFO --> BCC:  
+2013-11-09 10:15:11 - INFO --> Subject: Welcome to Flabber 
+2013-11-09 10:15:11 - INFO --> Body: Welcome to Flabber! We hope you find time to flabb each and every day. Be sure to visit Flabber often by visiting http://p2.iportal.pw
+                 
+2013-11-09 10:18:28 - INFO --> -------------------------- 
+2013-11-09 10:18:28 - INFO --> Controller/Method: users/p_signup 
+2013-11-09 10:18:28 - INFO --> From: Charge Me UP (zpostle@gmail.com) 
+2013-11-09 10:18:28 - INFO --> To: Yaya (ygoulakan@gmail.com),  
+2013-11-09 10:18:28 - INFO --> CC:  
+2013-11-09 10:18:28 - INFO --> BCC:  
+2013-11-09 10:18:28 - INFO --> Subject: Welcome to Flabber 
+2013-11-09 10:18:28 - INFO --> Body: Welcome to Flabber! We hope you find time to flabb each and every day. Be sure to visit Flabber often by visiting http://p2.iportal.pw
+                 
+2013-11-09 10:21:41 - INFO --> -------------------------- 
+2013-11-09 10:21:41 - INFO --> Controller/Method: users/p_signup 
+2013-11-09 10:21:41 - INFO --> From: Charge Me UP (zpostle@gmail.com) 
+2013-11-09 10:21:41 - INFO --> To: Kumbe (kigalla@gmail.com),  
+2013-11-09 10:21:41 - INFO --> CC:  
+2013-11-09 10:21:41 - INFO --> BCC:  
+2013-11-09 10:21:41 - INFO --> Subject: Welcome to Flabber 
+2013-11-09 10:21:41 - INFO --> Body: Welcome to Flabber! We hope you find time to flabb each and every day. Be sure to visit Flabber often by visiting http://p2.iportal.pw
+                 
+2013-11-09 19:45:50 - INFO --> -------------------------- 
+2013-11-09 19:45:50 - INFO --> Controller/Method: users/p_signup 
+2013-11-09 19:45:50 - INFO --> From: Charge Me UP (zpostle@gmail.com) 
+2013-11-09 19:45:50 - INFO --> To: Kelly (kolynyk@gmail.com),  
+2013-11-09 19:45:50 - INFO --> CC:  
+2013-11-09 19:45:50 - INFO --> BCC:  
+2013-11-09 19:45:50 - INFO --> Subject: Welcome to Charge Me UP! 
+2013-11-09 19:45:50 - INFO --> Body: Welcome to Charge Me UP! You have free reign to do what you want now!
+                 
+2013-11-09 19:48:53 - INFO --> -------------------------- 
+2013-11-09 19:48:53 - INFO --> Controller/Method: users/p_signup 
+2013-11-09 19:48:53 - INFO --> From: Charge Me UP (zpostle@gmail.com) 
+2013-11-09 19:48:53 - INFO --> To: Kelly (kolynyk@gmail.com),  
+2013-11-09 19:48:53 - INFO --> CC:  
+2013-11-09 19:48:53 - INFO --> BCC:  
+2013-11-09 19:48:53 - INFO --> Subject: Welcome to Charge Me UP! 
+2013-11-09 19:48:53 - INFO --> Body: Welcome to Charge Me UP! You have free reign to do what you want now!
+                 
+2013-11-09 19:50:07 - INFO --> -------------------------- 
+2013-11-09 19:50:07 - INFO --> Controller/Method: users/p_signup 
+2013-11-09 19:50:07 - INFO --> From: Charge Me UP (zpostle@gmail.com) 
+2013-11-09 19:50:07 - INFO --> To: Jared (jsullinger@gmail.com),  
+2013-11-09 19:50:07 - INFO --> CC:  
+2013-11-09 19:50:07 - INFO --> BCC:  
+2013-11-09 19:50:07 - INFO --> Subject: Welcome to Charge Me UP! 
+2013-11-09 19:50:07 - INFO --> Body: Welcome to Charge Me UP! You have free reign to do what you want now!
+                 
+2013-11-09 23:10:10 - INFO --> -------------------------- 
+2013-11-09 23:10:10 - INFO --> Controller/Method: users/p_signup 
+2013-11-09 23:10:10 - INFO --> From: Charge Me UP (zpostle@gmail.com) 
+2013-11-09 23:10:10 - INFO --> To: Kate (ksullivan@gmail.com),  
+2013-11-09 23:10:10 - INFO --> CC:  
+2013-11-09 23:10:10 - INFO --> BCC:  
+2013-11-09 23:10:10 - INFO --> Subject: Welcome to Charge Me UP! 
+2013-11-09 23:10:10 - INFO --> Body: Welcome to Charge Me UP! You have free reign to do what you want now!
+                 
+2013-11-09 23:11:35 - INFO --> -------------------------- 
+2013-11-09 23:11:35 - INFO --> Controller/Method: users/p_signup 
+2013-11-09 23:11:35 - INFO --> From: Charge Me UP (zpostle@gmail.com) 
+2013-11-09 23:11:35 - INFO --> To: Terry (tlane@gmail.com),  
+2013-11-09 23:11:35 - INFO --> CC:  
+2013-11-09 23:11:35 - INFO --> BCC:  
+2013-11-09 23:11:35 - INFO --> Subject: Welcome to Charge Me UP! 
+2013-11-09 23:11:35 - INFO --> Body: Welcome to Charge Me UP! You have free reign to do what you want now!
+                 
+2013-11-09 23:22:20 - INFO --> -------------------------- 
+2013-11-09 23:22:20 - INFO --> Controller/Method: users/p_signup 
+2013-11-09 23:22:20 - INFO --> From: Charge Me UP (zpostle@gmail.com) 
+2013-11-09 23:22:20 - INFO --> To: Zach (zpostle@gmail.com),  
+2013-11-09 23:22:20 - INFO --> CC:  
+2013-11-09 23:22:20 - INFO --> BCC:  
+2013-11-09 23:22:20 - INFO --> Subject: Welcome to Charge Me UP! 
+2013-11-09 23:22:20 - INFO --> Body: Welcome to Charge Me UP! You have free reign to do what you want now!
+                 
+2013-11-09 23:23:43 - INFO --> -------------------------- 
+2013-11-09 23:23:43 - INFO --> Controller/Method: users/p_signup 
+2013-11-09 23:23:43 - INFO --> From: Charge Me UP (zpostle@gmail.com) 
+2013-11-09 23:23:43 - INFO --> To: Jeb (jpostle@gmail.com),  
+2013-11-09 23:23:43 - INFO --> CC:  
+2013-11-09 23:23:43 - INFO --> BCC:  
+2013-11-09 23:23:43 - INFO --> Subject: Welcome to Charge Me UP! 
+2013-11-09 23:23:43 - INFO --> Body: Welcome to Charge Me UP! You have free reign to do what you want now!
+                 
+2013-11-09 23:30:12 - INFO --> -------------------------- 
+2013-11-09 23:30:12 - INFO --> Controller/Method: users/p_signup 
+2013-11-09 23:30:12 - INFO --> From: Charge Me UP (zpostle@gmail.com) 
+2013-11-09 23:30:12 - INFO --> To: Zach (zpostle@gmail.com),  
+2013-11-09 23:30:12 - INFO --> CC:  
+2013-11-09 23:30:12 - INFO --> BCC:  
+2013-11-09 23:30:12 - INFO --> Subject: Welcome to Charge Me UP! 
+2013-11-09 23:30:12 - INFO --> Body: Welcome to Charge Me UP! You have free reign to do what you want now!
+                 
+2013-11-09 23:30:32 - INFO --> -------------------------- 
+2013-11-09 23:30:32 - INFO --> Controller/Method: users/p_signup 
+2013-11-09 23:30:32 - INFO --> From: Charge Me UP (zpostle@gmail.com) 
+2013-11-09 23:30:32 - INFO --> To: Jeb (jpostle@gmail.com),  
+2013-11-09 23:30:32 - INFO --> CC:  
+2013-11-09 23:30:32 - INFO --> BCC:  
+2013-11-09 23:30:32 - INFO --> Subject: Welcome to Charge Me UP! 
+2013-11-09 23:30:32 - INFO --> Body: Welcome to Charge Me UP! You have free reign to do what you want now!
+                 

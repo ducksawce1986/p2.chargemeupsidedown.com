@@ -1,0 +1,47 @@
+2013-12-25 19:49:18 - INFO --> -------------------------- 
+2013-12-25 19:49:18 - INFO --> Controller/Method: users/p_signup 
+2013-12-25 19:49:19 - INFO --> From: Charge Me UP (zpostle@gmail.com) 
+2013-12-25 19:49:19 - INFO --> To: zach (zpostle@gmail.com),  
+2013-12-25 19:49:19 - INFO --> CC:  
+2013-12-25 19:49:19 - INFO --> BCC:  
+2013-12-25 19:49:19 - INFO --> Subject: Welcome to Charge Me UP! 
+2013-12-25 19:49:19 - INFO --> Body: Welcome to Charge Me UP! You have free reign to do what you want now!
+                 
+2013-12-25 19:51:53 - INFO --> -------------------------- 
+2013-12-25 19:51:53 - INFO --> Controller/Method: users/p_signup 
+2013-12-25 19:51:53 - INFO --> From: Charge Me UP (zpostle@gmail.com) 
+2013-12-25 19:51:53 - INFO --> To: jeb (jpostle@gmail.com),  
+2013-12-25 19:51:53 - INFO --> CC:  
+2013-12-25 19:51:53 - INFO --> BCC:  
+2013-12-25 19:51:53 - INFO --> Subject: Welcome to Charge Me UP! 
+2013-12-25 19:51:53 - INFO --> Body: Welcome to Charge Me UP! You have free reign to do what you want now!
+                 
+2013-12-25 19:59:00 - INFO --> -------------------------- 
+2013-12-25 19:59:00 - INFO --> Controller/Method: users/p_signup 
+2013-12-25 19:59:00 - INFO --> From: Charge Me UP (zpostle@gmail.com) 
+2013-12-25 19:59:00 - INFO --> To: gerald (gjohnson@gmail.com),  
+2013-12-25 19:59:00 - INFO --> CC:  
+2013-12-25 19:59:00 - INFO --> BCC:  
+2013-12-25 19:59:00 - INFO --> Subject: Welcome to Charge Me UP! 
+2013-12-25 19:59:00 - INFO --> Body: Welcome to Charge Me UP! You have free reign to do what you want now!
+                 
+2013-12-25 20:29:24 - INFO --> -------------------------- 
+2013-12-25 20:29:24 - INFO --> Controller/Method: users/p_signup 
+2013-12-25 20:29:24 - INFO --> From: Charge Me UP (zpostle@gmail.com) 
+2013-12-25 20:29:24 - INFO --> To: amare (astoudamire),  
+2013-12-25 20:29:24 - INFO --> CC:  
+2013-12-25 20:29:24 - INFO --> BCC:  
+2013-12-25 20:29:24 - INFO --> Subject: Welcome to Charge Me UP! 
+2013-12-25 20:29:24 - INFO --> Body: Welcome to Charge Me UP! You have free reign to do what you want now!
+                 
+2013-12-25 20:29:24 - INFO --> FAILED TO SEND EMAIL 
+2013-12-25 20:49:09 - INFO --> -------------------------- 
+2013-12-25 20:49:09 - INFO --> Controller/Method: users/p_signup 
+2013-12-25 20:49:09 - INFO --> From: Charge Me UP (zpostle@gmail.com) 
+2013-12-25 20:49:09 - INFO --> To:  (),  
+2013-12-25 20:49:09 - INFO --> CC:  
+2013-12-25 20:49:09 - INFO --> BCC:  
+2013-12-25 20:49:09 - INFO --> Subject: Welcome to Charge Me UP! 
+2013-12-25 20:49:09 - INFO --> Body: Welcome to Charge Me UP! You have free reign to do what you want now!
+                 
+2013-12-25 20:49:09 - INFO --> FAILED TO SEND EMAIL 

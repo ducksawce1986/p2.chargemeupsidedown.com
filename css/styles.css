@@ -1,71 +1,79 @@
+/* 
+CSS for p1.turkeyumber.com
+Dynamic Web Apps, Fall 2013
+
+colors:
+#FFA400
+#DF0018
+*/
+
+
+/* Some general resets */
 html, body, div, span, h1, h2, h3, h4, h5, h6, p, em, img, a
  {
-    font-size:100%;
-    vertical-align:baseline;
     margin:0;
     padding:0;
     border:0;
     outline:0;
+    font-size:100%;
+    vertical-align:baseline;
 }
 
 
 
 body {
-    background-color: #ffefdd;
     line-height:1.25em;
     height: 100%;
-    
+    background-color: #ffffff;
 }
 
+
 a {
-    background:transparent;
-    vertical-align:baseline;
     margin:0;
     padding:0;
     font-size:100%;
+    vertical-align:baseline;
+    background:transparent;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: "Trebuchet MS", Helvetica, sans-serif;
-    font-weight: 100;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 800;
 }
 
 h1 {
     font-size:1.5em;
     line-height: 1.75em;
-    color: #CDaa22;
+    color: #CC0000;
 }
 
 h2 {
     font-size:1em;
-    color: #EF0015;
+    color: #DF0018;
     margin-top: .75em;
 }
 
 p, li {
-    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    font-family: 'Raleway', sans-serif;
     font-weight: 400;
     font-size: .85em;
     color: #000000;
 }
 
 a {
-    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    font-family: 'Raleway', sans-serif;
     font-weight: 800;
     text-decoration: none;
     color: #999999;
 }
 
-h1, a {
-    float: middle;
-    padding: 20px, 20px, 20px, 20px;
-}
+
 
 form{
-    font-family: "Trebuchet MS", Helvetica, sans-serif;
-    font-weight: 100;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 800;
     text-decoration: none;
-    color: #345534;
+    color: #343434;
     font-size: 1.1em;
 }
 
@@ -77,14 +85,15 @@ form{
     border:1px solid gray;
     margin:5px;
     padding:5px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
     border-radius: 4px;
 }
 
 
 .container {
     display: block;
-    width: 50%;
-    margin: 0 auto;
+    width: 100%;
     min-height:100%;
     padding: 0px 0 35px 0;
 /*    overflow:auto;
@@ -98,9 +107,9 @@ form{
 
 #menu{
     width:80%;
-    max-width: 1000px;
+    max-width: 600px;
     margin:0 auto;
-    padding: 30px 50px 0px 50px;
+    padding: 10px 50px 0px 50px;
     text-align: justify;
     border: 1px #000000;
    /* font-size: 0.1px; /*hide whitespace between elements*/
@@ -120,9 +129,9 @@ form{
     height: 0;
 }
 
-/*------------------
-Dislay In The Middle
-------------------*/
+/*-------------------------------------------------------------------------------------------------
+        central display box
+-------------------------------------------------------------------------------------------------*/
 
 
 .infobox {
@@ -130,17 +139,22 @@ Dislay In The Middle
     width: 80%;
     max-width: 700px;
     min-height: 200px;
-    background-color: #fffeef;
+    background-color: #ffffff; /*97C8E0; /* 9DDE9D #66cc66; 9DDE9D*/
     margin: 0 auto;
-    padding: 25px ;
+    padding: 25px ;/*15px 25px 15px;*/
+   /* -webkit-border-radius: 40px;
+    -moz-border-radius: 40px;
+    border-radius: 40px;
+    -webkit-box-shadow: 1px 1px 10px #999999;
+    -moz-box-shadow: 1px 1px 10px #999999;
+    box-shadow:  1px 1px 10px #999999; */
     overflow: hidden;
 }
 
 #inner_infobox{
     width: 49%;
     height:200px;
-    float:right;
-    display: block;
+    float:left;
 }
 
 #signup_infobox{
@@ -150,21 +164,19 @@ Dislay In The Middle
     padding-left: 10px;
 }
 
-#div button {
-    display: inline-block;
-    float: middle;
-}
+/*-------------------------------------------------------------------------------------------------
+        custom buttons
+-------------------------------------------------------------------------------------------------*/
 
-/*---------------
-Some Buttons
----------------*/
 
 #delete_option a{
-    float: right;
-    background-color: #ff9966;
+    float:right;
+    background-color: #ff4747;
     padding: 5px;
-    border-radius: 20px;
-    color: #000033;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    color: #3f3f3f;
 }
 
 .green_button {
@@ -191,39 +203,42 @@ Some Buttons
     border-radius: 10px;
 }
 
-/*-----------
-Profile Posts
------------*/
+/*-------------------------------------------------------------------------------------------------
+        posts
+-------------------------------------------------------------------------------------------------*/
 
 
 article {
-    border-bottom: 2px solid #aeaeae;
+    border-bottom: 1px solid #aeaeae;
     min-height: 110px;
 }
 
 time {
     font-family: 'Raleway', sans-serif;
-    text-align: left;
+    text-align: right;
     float:left;
     vertical-align:bottom;
-    font-size: 1.0em;
+    font-size: .75em;
     color: #aeaeae;
     display: block;
     width: 100%;
 }
+
 
 #poster{
     font-size: 0.9em;
     color: #003366;
 }
 
+
 #posts{
     display: block;
     font-size: 1.5em;
     width: 100%;
-    min-height: 50px;
+    min-height: 75px;
     padding-left: 10px;
 }
+
 
 #infobox_posts{
     width: 60%;
@@ -245,39 +260,46 @@ time {
     float:right;
 }
 
-/*---------------
-Header And Footer
----------------*/
 
-.header {
-    width:80%;
-    background-color: #ffffcc; 
+
+
+
+/*-------------------------------------------------------------------------------------------------
+        header/footer bizniss
+-------------------------------------------------------------------------------------------------*/
+
+
+.header{
+    width:100%;
+    background-color: #656565; 
     height: 150px;
-    border-bottom: 15px solid #66cc66;
+    background-image:url('tree_bark.png');
+    background-repeat:repeat;/*
+    border-bottom: 5px solid #66A385;*/
 }
 
 .header h1 a{
-    color:#000300;
+    color:#000000;
     font-size: 400%;
     padding: 150px 0px 0px 100px;
 }
 
 .header_links{
     padding: 38px;
-    text-align: right
+    text-align: right;
 }
+
 
 .footer {
     width:100%;
     height: 120px;
-    background-color: #656565; 
-    border-top: 15px solid #66cc66;
+    background-color: #006633;
+    border-top: 5px solid #66A385;
     display: block;
     font-size: 1.1em;
-    color: #FFFFcc;
+    color: #FFFFFF;
     margin-top: -20px;
-    text-align: center;
-
+    text-align: left;
     
 }
 
@@ -285,30 +307,20 @@ Header And Footer
     padding: 20px 0px 0px 20px;
     text-align: left;
     font-size: 0.8em;
-    color:#ffffcc;
-
+    color:#ffffff;
 }
 
 .footer li{
     text-align: left;
     font-size: 0.8em;
-    color:#ffffcc;
+    color:#ffffff;
 }
 
-.footer h1 a {
-    text-align: center;
-    font-size: 14px;
-    color: #ffffcc;
+#profileFoot{
+    display:block;
+    clear:both;
 }
 
 .space {
     margin: 20px 0;
 }
-
-.cancun {
-    margin:10px;
-    padding:10px, 10px, 10px, 10px;
-    display: block;
-}
-
-

@@ -1,0 +1,609 @@
+/*-- C-Users
+
+<?php
+
+class users_controller extends base_controller {
+
+/*---------------------------------------------------------------------------
+---------------------------------------------------------------------------*/
+
+    public function __construct() {
+            parent::__construct();
+    } 
+
+    /*-----------------------------
+    Form display for user sign up
+    -----------------------------*/
+
+    public function signup() {
+
+        # Set up the view
+        $this->template->content = View::instance('v_users_signup');
+        $this->template->title = "Sign Up";
+
+        # Render the view
+        echo $this->template;
+    }
+
+    /*--------------------------
+    Processing sign up form
+    --------------------------*/
+
+    public function p_signup() {
+
+        # Sanitize User Data Against SQL Injection Attack
+        $_POST = DB::instance(DB_NAME)->sanitize($_POST);
+
+        # Time Of Signup Creation and Modification
+        $_POST['created'] = Time::now();
+        $_POST['modified'] = Time::now();
+
+        # Password Encryption
+        $_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
+
+        # Make Encrypted Token With Email + Random String
+        $_POST['token'] = sha1(TOKEN_SALT.$_POST['email'].Utils::generate_random_string());
+
+        # Insert New User Into Database
+        $user = DB::instance(DB_NAME)->insert_row('users', $_POST);
+
+        # Route User To "Signup Success" Page
+        Router::redirect('/users/login');
+    }
+
+    /*-------------------------
+    Display form for user login
+    -------------------------*/
+
+    public function login($error = NULL) {
+        # Set Up View
+        $this->template->content = View::instance('v_users_login');
+
+        #Pass Data To The View
+        $this->template->content->error = $error;
+        $this->template->title = "Login";
+
+        # Render The View
+        echo $this->template;
+    }
+
+    /*-------------------------
+    Process login form
+    -------------------------*/
+
+    public function p_login() {
+
+        # Sanitize Data Against SQL Injection Attack
+        $_POST = DB::instance(DB_NAME)->sanitize($_POST);
+
+        # Hash password entered by user to compare to database
+        $_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
+
+        # Set up query to see if there's matching email/password in DB
+        $q =
+            'SELECT token
+            FROM users
+            WHERE email = "'.$_POST['email'].'"
+            AND password = "'.$_POST['password'].'"';
+
+        # If there is match, return token
+        $token = DB::instance(DB_NAME)->select_field($q);
+
+        # Success
+        if($token) {
+            
+            # Don't echo anything to page before setting this cookie
+            setcookie('token', $token, strtotime('+1 year'), '/');
+            
+            # Send them to homepage
+            Router::redirect('/');
+        }
+        
+        # Fail
+        else {
+
+            #Send them back to login page
+            echo "Login failed! <a href='/users/login'>Try again!?</a>";
+        }
+
+    }
+
+    /*---------------------------------------
+    No view needed here. Logout automatically
+    takes user from users/logout to homepage
+    ---------------------------------------*/
+
+    public function logout() {
+        
+        # Generate a new token they'll use next time they log in
+        $new_token = sha1(TOKEN_SALT.$this->user->email.Utils::generate_random_string());
+
+        # Update their row in the DB with a new token
+        $data = Array('token' => $new_token);
+
+        DB::instance(DB_NAME)->update('users',$data, 'WHERE user_id ='. $this->user->user_id);
+
+        # Delete old token cookie by expiring it
+        setcookie('token', '', strtotime('-1 year'), '/');
+
+        # Send them back to the homepage
+        Router::redirect('/');
+
+    }
+
+
+    /*------------------------------------------
+    ------------------------------------------*/
+
+    public function profile($user_name = NULL) {
+
+        # Only logged in users are allowed
+        if(!$this->user) {
+
+            //Router::redirect('/');
+            Router::redirect('/users/login');
+        }
+
+        # Set up the View
+        $this->template->content = View::instance('v_users_profile');
+        
+        # Set page title
+        $this->template->title = $this->user->first_name." ".$this->user->last_name;
+
+        # Load client files
+        $client_files_head = Array(
+            '/css/profile.css',
+            '/css/master.css'
+            );
+
+        $this->template->client_files_head = Utils::load_client_files($client_files_head);
+
+        $client_files_body = Array(
+            '/js/profile.js'
+            );
+
+        $q = 'SELECT
+                posts.content,
+                posts.created,
+                posts.user_id,
+                posts.post_id
+            FROM posts
+            WHERE posts.user_id ='.$this->user->user_id . '
+            ORDER BY posts.created DESC' ;
+
+        $posts = DB::instance(DB_NAME)->select_rows($q);
+        # Passing Data To The View
+        $this->template->content->posts = $posts;
+        $this->template->content->user_name = $user_name;
+        # Render View
+        echo $this->template;
+    }
+
+    /*-------------
+    Add Avatar
+    -------------*/
+
+    public function upload() {
+
+        # Setup view
+        $this->template->content = View::instance('v_users_upload');
+        $this->template->title   = "Profile";
+
+        # Render template
+        echo $this->template;
+
+   }
+
+   /*---------------------
+   Avatar Processing
+   ---------------------*/
+
+   public function p_upload() {
+
+        #Save image as a string and update row in the database
+        $image = Upload::upload($_FILES, "/uploads/profile/", array("jpg", "JPG", "jpeg", "JPEG","gif", "GIF","png", "PNG"), $this->user->user_id);
+
+        $imageFileName = dirname(__FILE__).'/../uploads/profile/'.$image;
+
+        $data=array("image"=>$image);
+        $dbInstance = DB::instance(DB_NAME);
+        $rows = $dbInstance->update("users", $data, "WHERE user_id = ".$this->user->user_id);
+
+        #Send them back to the main index.
+        Router::redirect("/users/profile");
+
+    }
+
+    
+
+} # end of the class
+
+
+/*-- C-Posts
+
+<?php
+
+class posts_controller extends base_controller {
+
+        /*------------------------------------------------------------------
+        ------------------------------------------------------------------*/
+
+        public function __construct() {
+
+                # Making sure the base controller construct gets called
+                parent::__construct();
+
+                # Letting only logged in users access methods in this controller
+                if(!$this->user) {
+                        die("Members only");
+                
+                }
+        }
+
+        /*---------------------
+        Display a new post form
+        ---------------------*/
+
+        public function add() {
+
+                $this->template->content = View::instance("v_posts_add");
+
+                echo $this->template;
+
+        }
+
+        /*-----------------------
+        Process new posts
+        -----------------------*/
+
+        public function p_add() {
+
+                # Link post with user
+                $_POST['user_id'] = $this->user->user_id;
+
+                # Timestamp of post
+                $_POST['created'] = Time::now();
+                $_POST['modified'] = Time::now();
+
+                DB::instance(DB_NAME)->insert('posts', $_POST);
+
+                # View setup
+                $this->template->content = View::instance('v_posts_p_add');
+                $this->template->title = "You've Charged UP";
+
+                # View 
+                Router::redirect('/users/profile');
+
+        }
+
+         /*-----------------------
+        View all posts
+        -----------------------*/
+
+        public function index() {
+
+                $this->template->content = View::instance('v_posts_index');
+                $this->template->title = "Charge Yourself UP";
+
+                $q = 'SELECT 
+                    posts.post_id,
+                    posts.content,
+                    posts.created,
+                    posts.user_id AS post_user_id,
+                    users_users.user_id AS follower_id,
+                    users.user_id,
+                    users.first_name,
+                    users.last_name
+                FROM posts
+                INNER JOIN users_users 
+                    ON posts.user_id = users_users.user_id_followed
+                INNER JOIN users 
+                    ON posts.user_id = users.user_id
+                WHERE users_users.user_id = '.$this->user->user_id;
+
+                $posts = DB::instance(DB_NAME)->select_rows($q);
+
+                $this->template->content->posts = $posts;
+
+                echo $this->template;
+
+        }
+
+        /*-----------------------
+        -----------------------*/
+
+        public function users() {
+
+                $this->template->content = View::instance("v_posts_users");
+
+                $q = 'SELECT *
+                        FROM users';
+
+                $users = DB::instance(DB_NAME)->select_rows($q);
+
+                $q = 'SELECT *
+                        FROM users_users
+                        WHERE user_id = '.$this->user->user_id; 
+
+                $connections = DB::instance(DB_NAME)->select_array($q, 'user_id_followed');
+
+                $this->template->content->users = $users;
+                $this->template->content->connections = $connections;
+
+                echo $this->template;
+
+        }
+
+        /*--------------------------------------------------
+        Creates row in users_users table showing 'following'
+        --------------------------------------------------*/
+
+        public function follow($user_id_followed) {
+        
+            # Prepare the data array to be inserted
+            $data = Array(
+                "created"          => Time::now(),
+                "user_id"          => $this->user->user_id,
+                "user_id_followed" => $user_id_followed
+                );
+        
+            # Do the insert
+            DB::instance(DB_NAME)->insert('users_users', $data);
+        
+            # Send them back
+            Router::redirect("/posts/users");
+        
+        }
+
+    /*-------------------------------------------------------
+    Removes row from users_users table, triggering 'unfollow'
+    -------------------------------------------------------*/
+    
+    public function unfollow($user_id_followed) {
+        
+            # Set up the where condition
+            $where_condition = 'WHERE user_id = '.$this->user->user_id.' AND user_id_followed = '.$user_id_followed;
+            
+            # Run the delete
+            DB::instance(DB_NAME)->delete('users_users', $where_condition);
+        
+            # Send them back
+            Router::redirect("/posts/users");
+        
+    }
+
+    /*----------------------------------------
+    Delete Post Confirmation
+    ----------------------------------------*/
+
+    public function confirm_delete($post_id) {
+        # Set up the View
+        $this->template->content = View::instance('v_posts_delete');
+        $this->template->title   = "Confirm delete?";
+        $this->template->content->post_id = $post_id;
+
+        # Render template
+        echo $this->template;
+
+    }
+
+    /*-----------------------------------
+    Delete Post Processing
+    -----------------------------------*/
+
+    public function p_delete($post_id) {
+        $data = "WHERE post_id = ".$post_id; 
+        DB::instance(DB_NAME)->delete('posts',$data);
+
+        Router::redirect('/users/profile'); 
+    }
+
+
+    public function edit($edited) {
+            # Set up the View
+            $this->template->content = View::instance('v_posts_edit');
+                    
+            # Build the query to get the post
+            $q = "SELECT *
+                    FROM posts
+                    WHERE user_id = ".$this->user->user_id. " 
+                    AND post_id = .$edited;"
+
+            # Execute the query to get all the users.
+            # Store the result array in the variable $post
+            $_POST['editable'] = DB::instance(DB_NAME)->select_row($q);
+            
+            # Pass data to the view
+            $this->template->content->post = $_POST['editable'];
+            
+            # Render template
+            echo $this->template;         
+
+    }
+    
+    public function p_edit($id) {
+                                             
+        $_POST['modified'] = Time::now();
+            
+        # Be sure to Associate this post with this user
+        $_POST['user_id'] = $this->user->user_id;
+         
+        # set up the where conditon and update the post.
+        $where_condition = 'WHERE post_id = '.$id;
+        $updated_post = DB::instance(DB_NAME)->update('posts', $_POST, $where_condition);
+
+        # Send them back
+        Router::redirect('/users/profile');
+    }
+
+} # eoc
+
+
+
+ public function upload() {
+
+        # Setup view
+        $this->template->content = View::instance('v_users_upload');
+        $this->template->title   = "Profile";
+
+        # Render template
+        echo $this->template;
+
+   }
+
+
+-------------------------------
+
+AVATARRRRRRR
+   /*---------------------
+   Avatar Processing
+   ---------------------*/
+
+   public function p_upload() {
+
+        #Save image as a string and update row in the database
+        $image = Upload::upload($_FILES, "/uploads/profile/", array("jpg", "JPG", "jpeg", "JPEG","gif", "GIF","png", "PNG"), $this->user->user_id);
+
+        $imageFileName = dirname(__FILE__).'/../uploads/profile/'.$image;
+
+        $data=array("image"=>$image);
+        $dbInstance = DB::instance(DB_NAME);
+        $rows = $dbInstance->update("users", $data, "WHERE user_id = ".$this->user->user_id);
+
+        #Send them back to the main index.
+        Router::redirect("/users/profile");
+
+    }
+
+----------------------------------------
+
+public function profile_update() {
+        // if user specified a new image file, upload it
+        if ($_FILES['avatar']['error'] == 0)
+        {
+            //upload an image
+            $image = Upload::upload($_FILES, "/uploads/avatars/", array("jpg", "JPG", "jpeg", "JPEG", "gif", "GIF", "png", "PNG"), $this->user->user_id);
+
+            $data = Array("image" => $image);
+            DB::instance(DB_NAME)->update("users", $data, "WHERE user_id = ".$this->user->user_id);
+
+            // resize the image and make a thumbnail version
+            $imgObj = new Image($_SERVER["DOCUMENT_ROOT"] . '/uploads/avatars/' . $image);
+            $imgObj->resize(200,200, "crop");
+            $imgObj->save_image($_SERVER["DOCUMENT_ROOT"] . '/uploads/avatars/' . $image); 
+
+        }
+
+        // Redirect back to the profile page
+        Router::redirect('/users/profile'); 
+    }    
+
+
+
+
+
+public function p_signup() {
+        # Sanitize the user entered data to prevent any funny-business (re: SQL Injection Attacks)
+        $_POST = DB::instance(DB_NAME)->sanitize($_POST);
+
+        # More data we want stored with the user
+        $_POST['created']  = Time::now();
+        $_POST['modified'] = Time::now();
+        # Encrypt the password  
+        $_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);            
+        # Create an encrypted token via their email address and a random string
+        $_POST['token'] = sha1(TOKEN_SALT.$_POST['email'].Utils::generate_random_string()); 
+        # Insert this user into the database
+        $user_id = DB::instance(DB_NAME)->insert('users', $_POST);
+        # For now, just confirm they've signed up - 
+        # You should eventually make a proper View for this
+        $this->template->content = View::instance('v_users_success');
+        $this->template->title   = "Welcome!";
+        echo $this->template;
+    }
+
+
+
+
+
+
+
+    public function profile_edit() {
+        // Set up the view
+        $this->template->content = View::instance('v_users_profile_edit');
+        $this->template->title   = "Edit Profile";
+
+        // Render the view
+        echo $this->template;
+
+    }
+
+
+    public function p_profile_edit() {
+
+
+        $q = "UPDATE    users
+            SET         first_name = '".$_REQUEST['first_name']."',
+                        last_name = '".$_REQUEST['last_name']."',
+                        email = '".$_REQUEST['email']."'
+            WHERE       email = '".$this->user->email."'";
+
+        DB::instance(DB_NAME)->query($q);
+        Router::redirect("/users/profile");
+
+        
+    }
+
+
+
+
+
+
+
+
+
+
+
+    <?php if($user): ?> 
+    <h1><?=$user->first_name?>'s Profile</h1>
+    <div id="infobox_avatar">
+    <!-- Display user's avatar if uploaded -->
+    <img class="avatar" src="/uploads/avatars/<?= $user->image ?>" alt="<?=$user->first_name . ' ' . $user->last_name ?>">
+    <!-- If user hasn't uploaded a profile pic, display form for uploading below -->
+        <?php if ($user->image  == 'placeholder.jpg'): ?>
+            <div id="avatar_update_form">
+                <p>Would you like to upload your own photo?</p> 
+                <!-- for for uploading a photo -->
+                <form role="form" method='POST' enctype="multipart/form-data" action='/users/profile_update/'>
+                    <div>
+                        <input type="file" id="avatar" name="avatar">
+                    </div>
+                    <button type="submit" class="btn btn-custom">Update Your Profile Image</button>
+                </form> 
+            </div>
+        <?php endif; ?>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+    <It's time for you to upload a photo of yourself. It can be of whatever you like, as long as it distinguishes you!
+
+<form method='POST' enctype="multipart/form-data" action='/users/p_upload'>
+                <input type='file' name='whatever-you-want'>
+                <input type='submit'>
+</form>
+
+<div id="inner_infobox_left">
+    <img class="avatar" src="http://us.123rf.com/400wm/400/400/sergo/sergo1107/sergo110700333/9903129-vector-hand-drawn-studio-microphone-and-stars.jpg" alt = "Charge Up">
+    <h2>It's time for you to look good</h2>
+    <br>
+</div>
